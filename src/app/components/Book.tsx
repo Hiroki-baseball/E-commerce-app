@@ -1,7 +1,5 @@
 "use client";
-
 import Image from "next/image";
-import Link from "next/link";
 import { BookType } from "../types/type";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -51,10 +49,6 @@ const Book = ({ book, isPurchased }: BookProps) => {
       alert("その商品は購入済みです");
     } else {
       setShowModal(true);
-
-      // setTimeout(() => {
-      //   console.log("Modal state updated (delayed):", showModal);
-      // }, 0);
     }
   };
 

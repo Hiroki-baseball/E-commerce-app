@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 
 import { getProviders, signIn } from "next-auth/react";
 
@@ -9,20 +8,6 @@ async function Login() {
     console.log(res);
     return res;
   });
-
-  // function Login() {
-  //   const [providers, setProviders] = useState(null);
-
-  //   useEffect(() => {
-  //     const fetchProviders = async () => {
-  //       const res = await getProviders();
-  //       console.log(res);
-  //       setProviders(res);
-  //     };
-
-  //     fetchProviders();
-  //   }, []);
-  //   if (!providers) return <div>Loading...</div>;
 
   return (
     <div className="flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
