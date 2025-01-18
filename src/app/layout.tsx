@@ -3,6 +3,10 @@ import localFont from "next/font/local";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
+import { SessionProvider } from "next-auth/react";
+import { NextAuthProvider } from "./lib/Next-auth/provider";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,8 +42,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${notoSansJP.variable} antialiased`}
       >
-        <Header />
-        {children}
+        <NextAuthProvider>
+          <Header />
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </NextAuthProvider>
       </body>
     </html>
   );
