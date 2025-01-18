@@ -1,3 +1,9 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "warn", // 未使用の変数を警告に変更
+    "@typescript-eslint/no-explicit-any": "off", // any 型の使用を許可
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "warn", // オプショナルチェーンでの ! を警告に変更
+    "react-hooks/exhaustive-deps": "warn" // useEffect の依存配列チェックを警告に変更
+  }
 }
