@@ -70,7 +70,7 @@ const Book = ({ book, isPurchased }: BookProps) => {
   const handlePurchaseComfirm = () => {
     if (!user) {
       setShowModal(false);
-      router.push("/login"); // 未ログインの場合、ログインページへリダイレクト
+      router.push("/api/auth/signin"); // 未ログインの場合、ログインページへリダイレクト
     } else {
       startCheckout(); // ログイン済みなら決済処理を開始
     }
