@@ -1,9 +1,9 @@
 "use client";
+
 import Image from "next/image";
 import { BookType } from "../types/type";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-// import { useRouter } from "next/router";
 import { useRouter } from "next/navigation";
 
 type BookProps = {
@@ -11,12 +11,17 @@ type BookProps = {
   isPurchased: boolean;
 };
 
-// eslint-disable-next-line react/display-name
 const Book = ({ book, isPurchased }: BookProps) => {
   const [showModal, setShowModal] = useState(false);
   const { data: session } = useSession();
-  const user: any = session?.user;
   const router = useRouter();
+
+  // 型定義：ユーザー情報
+  const user = session?.user as {
+    id: string;
+    name?: string;
+    email?: string;
+  } | null;
 
   const startCheckout = async () => {
     try {
@@ -28,23 +33,25 @@ const Book = ({ book, isPurchased }: BookProps) => {
           body: JSON.stringify({
             title: book.title,
             price: book.price,
-            userId: user?.id,
+            userId: user?.id, // 型安全に
             bookId: book.id,
           }),
         }
       );
+
       const responseData = await response.json();
 
-      if (responseData) {
+      if (responseData?.checkout_url) {
         router.push(responseData.checkout_url);
+      } else {
+        console.error("Invalid checkout URL");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Checkout error:", err);
     }
   };
-  const handlePurchaseClick = () => {
-    console.log("handlePurchaseClick called"); // デバッグ用
 
+  const handlePurchaseClick = () => {
     if (isPurchased) {
       alert("その商品は購入済みです");
     } else {
@@ -53,8 +60,8 @@ const Book = ({ book, isPurchased }: BookProps) => {
   };
 
   useEffect(() => {
-    console.log("Modal state changed:", showModal); // 状態変化時ログ
-  }, [showModal]);
+    console.log("Modal state changed:", showModal);
+  }, [showModal]); // showModalの変更を監視
 
   const handleCancel = () => {
     setShowModal(false);
@@ -63,13 +70,12 @@ const Book = ({ book, isPurchased }: BookProps) => {
   const handlePurchaseComfirm = () => {
     if (!user) {
       setShowModal(false);
-      //ログインページへリダイレクト
-      router.push("/login");
+      router.push("/login"); // 未ログインの場合、ログインページへリダイレクト
     } else {
-      //stripeで決済する
-      startCheckout();
+      startCheckout(); // ログイン済みなら決済処理を開始
     }
   };
+
   return (
     <>
       {/* アニメーションスタイル */}
@@ -86,17 +92,6 @@ const Book = ({ book, isPurchased }: BookProps) => {
         }
         .modal {
           animation: fadeIn 0.3s ease-out forwards;
-          /* 
-          display: flex !important;
-          opacity: 1 !important;
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          z-index: 9999;
-          background-color: white;
-          padding: 20px;
-          border: 1px solid black; */
         }
       `}</style>
 
@@ -143,4 +138,5 @@ const Book = ({ book, isPurchased }: BookProps) => {
     </>
   );
 };
+
 export default Book;

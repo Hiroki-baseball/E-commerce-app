@@ -1,15 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 
-let prisma:PrismaClient;
-
 const globalForPrisma = global as unknown as {
-    prisma:PrismaClient | undefined;
+  prisma: PrismaClient | undefined;
 };
 
-if(!globalForPrisma.prisma){
-    globalForPrisma.prisma = new PrismaClient();
-}
+// グローバルに PrismaClient インスタンスを保持
+const prisma = globalForPrisma.prisma || new PrismaClient();
 
-prisma = globalForPrisma.prisma;
+if (!globalForPrisma.prisma) {
+  globalForPrisma.prisma = prisma;
+}
 
 export default prisma;
