@@ -6,8 +6,8 @@ import HeaderClient from "./HeaderClient"; // クライアント部分を別フ�
 export default async function Header() {
   const session = await getServerSession(nextAuthOptions);
   const user = session?.user || null;
-  console.log(session);
-  console.log(user);
+  // console.log(session);
+  // console.log(user);
   // サーバーコンポーネントでクライアントコンポーネントにデータを渡す
   return <HeaderClient user={user} />;
 }

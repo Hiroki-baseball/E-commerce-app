@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { BookType } from "../types/type";
+import { BookType, User } from "../types/type";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -9,19 +9,20 @@ import { useRouter } from "next/navigation";
 type BookProps = {
   book: BookType;
   isPurchased: boolean;
+  user: User;
 };
 
-const Book = ({ book, isPurchased }: BookProps) => {
+const Book = ({ book, isPurchased, user }: BookProps) => {
   const [showModal, setShowModal] = useState(false);
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const router = useRouter();
 
   // 型定義：ユーザー情報
-  const user = session?.user as {
-    id: string;
-    name?: string;
-    email?: string;
-  } | null;
+  // const user = session?.user as {
+  //   id: string;
+  //   name?: string;
+  //   email?: string;
+  // } | null;
 
   const startCheckout = async () => {
     try {
@@ -60,7 +61,7 @@ const Book = ({ book, isPurchased }: BookProps) => {
   };
 
   useEffect(() => {
-    console.log("Modal state changed:", showModal);
+    // console.log("Modal state changed:", showModal);
   }, [showModal]); // showModalの変更を監視
 
   const handleCancel = () => {

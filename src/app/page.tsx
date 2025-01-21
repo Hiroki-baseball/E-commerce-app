@@ -25,7 +25,7 @@ export default async function Home() {
       (purchaseBook: Purchase) => purchaseBook.bookId
     );
 
-    console.log(purchaseBookIds);
+    // console.log(purchaseBookIds);
   }
 
   return (
@@ -39,6 +39,7 @@ export default async function Home() {
             key={book.id}
             book={book}
             isPurchased={purchaseBookIds.includes(book.id)}
+            user={user}
           />
         ))}
       </main>
