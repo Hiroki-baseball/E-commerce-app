@@ -1,17 +1,18 @@
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { nextAuthOptions } from "../lib/Next-auth/options";
-import { BookType, Purchase, User } from "../types/type";
-import { getDetailBook } from "../lib/microcms/client";
-import PurchaseDetailBook from "../components/PurchaseDetailBook";
+import { TacoType, Purchase, User } from "../types/type";
+import { getDetailTaco } from "../lib/microcms/client";
+import PurchaseDetailTaco from "../components/PurchaseDetailTaco";
 
 export default async function ProfilePage() {
   const session = await getServerSession(nextAuthOptions);
   const user = session?.user as User;
 
-  let purchasesDetailBooks: BookType[] = [];
+  let purchasesDetailTacos: TacoType[] = [];
 
   if (user) {
+    console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`,
       { cache: "no-store" }
@@ -24,9 +25,9 @@ export default async function ProfilePage() {
     }
     const purchasesData = await response.json();
 
-    purchasesDetailBooks = await Promise.all(
+    purchasesDetailTacos = await Promise.all(
       purchasesData.map(async (purchase: Purchase) => {
-        return await getDetailBook(purchase.bookId);
+        return await getDetailTaco(purchase.tacoId);
       })
     );
   }
@@ -50,10 +51,10 @@ export default async function ProfilePage() {
 
       <span className="font-medium text-lg mb-4 mt-4 block">購入した記事</span>
       <div className="flex items-center gap-6">
-        {purchasesDetailBooks.map((purchaseDetailBook: BookType) => (
-          <PurchaseDetailBook
-            key={purchaseDetailBook.id}
-            purchaseDetailBook={purchaseDetailBook}
+        {purchasesDetailTacos.map((purchaseDetailTaco: TacoType) => (
+          <PurchaseDetailTaco
+            key={purchaseDetailTaco.id}
+            purchaseDetailTaco={purchaseDetailTaco}
           />
         ))}
       </div>

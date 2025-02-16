@@ -1,18 +1,18 @@
 // "use client";
 
 import { getServerSession } from "next-auth";
-import Book from "./components/Book";
-import { getAllBooks } from "./lib/microcms/client";
-import { BookType, Purchase, User } from "./types/type";
+import Taco from "./components/Taco";
+import { getAllTacos } from "./lib/microcms/client";
+import { TacoType, Purchase, User } from "./types/type";
 import { nextAuthOptions } from "./lib/Next-auth/options";
 
 // eslint-disable-next-line @next/next/no-async-client-component
 export default async function Home() {
-  const { contents } = await getAllBooks();
+  const { contents } = await getAllTacos();
   const session = await getServerSession(nextAuthOptions);
   const user = session?.user as User;
 
-  let purchaseBookIds: string[] = [];
+  let purchaseTacoIds: string[] = [];
 
   if (user) {
     const response = await fetch(
@@ -21,24 +21,36 @@ export default async function Home() {
     );
     const purchasesData = await response.json();
     // console.log(purchasesData);
-    purchaseBookIds = purchasesData.map(
-      (purchaseBook: Purchase) => purchaseBook.bookId
+    purchaseTacoIds = purchasesData.map(
+      (purchaseTaco: Purchase) => purchaseTaco.tacoId
     );
 
-    // console.log(purchaseBookIds);
+    // console.log(purchaseTacoIds);
   }
 
   return (
     <>
-      <main className="flex flex-wrap justify-center items-center md:mt-32 mt-20">
-        <h2 className="text-center w-full font-bold text-3xl mb-2">
-          Book Commerce
+      <main className="flex flex-wrap justify-center items-center bg-yellow-50">
+        <h2 className="text-center w-full font-bold text-4xl mb-2 mt-6">
+          Taco Recipes
         </h2>
-        {contents.map((book: BookType) => (
-          <Book
-            key={book.id}
-            book={book}
-            isPurchased={purchaseBookIds.includes(book.id)}
+        <h3 className="text-center w-full font-bold text-2xl text-gray-700 mt-6">
+          本格的な
+          <span className="text-green-500">メ</span>
+          <span
+            className="text-white"
+            style={{ WebkitTextStroke: "1px black" }}
+          >
+            キシ
+          </span>
+          <span className="text-red-500">コ</span>
+          の味を楽しもう！ストリートタコスから自家製の定番レシピまで、あらゆるタコスレシピを紹介。
+        </h3>
+        {contents.map((taco: TacoType) => (
+          <Taco
+            key={taco.id}
+            taco={taco}
+            isPurchased={purchaseTacoIds.includes(taco.id)}
             user={user}
           />
         ))}

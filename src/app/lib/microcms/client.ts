@@ -1,4 +1,4 @@
-import { BookType } from '@/app/types/type';
+import { TacoType } from '@/app/types/type';
 import { createClient } from 'microcms-js-sdk';
 
 export const client = createClient({
@@ -6,9 +6,9 @@ export const client = createClient({
   apiKey: process.env.NEXT_PUBLIC_API_KEY!,
 });
 
-export const getAllBooks = async () => {
-    const allBooks = await client.getList<BookType>({
-        endpoint:"bookcommerce",
+export const getAllTacos = async () => {
+    const allTacos = await client.getList<TacoType>({
+        endpoint:"tacosrecipe",
         customRequestInit:{
           next:{
             revalidate:3600
@@ -16,16 +16,16 @@ export const getAllBooks = async () => {
         },
     });
 
-    return allBooks;
+    return allTacos;
 };
 
-export const getDetailBook = async (contentId: string) => {
-  const DetailBook = await client.getListDetail<BookType>({
-    endpoint:"bookcommerce",
+export const getDetailTaco = async (contentId: string) => {
+  const DetailTaco = await client.getListDetail<TacoType>({
+    endpoint:"tacosrecipe",
     contentId,
     customRequestInit:{
       cache:"no-cache",
     },
   });
-  return DetailBook;
+  return DetailTaco;
 }

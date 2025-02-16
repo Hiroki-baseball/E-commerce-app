@@ -10,21 +10,21 @@ interface HeaderClientProps {
 
 const HeaderClient = ({ user }: HeaderClientProps) => {
   return (
-    <header className="bg-slate-600 text-gray-100 shadow-lg">
+    <header className="bg-green-600 text-red-600 shadow-lg">
       <nav className="flex items-center justify-between p-4">
-        <Link href={"/"} className="text-xl font-bold">
-          Book Commerce
+        <Link href={"/"} className="text-3xl font-bold">
+          Taco Recipes
         </Link>
         <div className="flex items-center gap-1">
           <Link
             href="/"
-            className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            className="text-red-600 hover:text-white px-3 py-2 rounded-md text-sm font-bold"
           >
             ホーム
           </Link>
           <Link
-            href={user ? "profile" : "/api/auth/signin"}
-            className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            href={user ? `/profile` : "/api/auth/signin"}
+            className="text-red-600 hover:text-white px-3 py-2 rounded-md text-sm font-bold"
           >
             {user ? "プロフィール" : "ログイン"}
           </Link>
@@ -33,7 +33,7 @@ const HeaderClient = ({ user }: HeaderClientProps) => {
             <Link
               // onClick={() => signOut({ callbackUrl: "/login" })}
               href={"/api/auth/signout"}
-              className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
             >
               ログアウト
             </Link>

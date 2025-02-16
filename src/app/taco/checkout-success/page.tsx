@@ -5,17 +5,19 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 const PurchaseSuccess = () => {
-  const [bookUrl, setBookUrl] = useState(null);
+  const [tacoUrl, setTacoUrl] = useState(null);
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
 
-  console.log(sessionId);
+  console.log("sessionId:", sessionId);
 
   useEffect(() => {
     const fetchData = async () => {
       if (sessionId) {
         try {
-          //   console.log("sessionID", sessionId);
+          console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
+
+          console.log("sessionID", sessionId);
           const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/checkout/success`,
             {
@@ -24,11 +26,20 @@ const PurchaseSuccess = () => {
               body: JSON.stringify({ sessionId }),
             }
           );
-          //   console.log(await res.json());
           const data = await res.json();
-          setBookUrl(data.purchase.bookId);
+          console.log("Response data:", data);
+          if (data.error) {
+            console.error("Error from API:", data.error);
+            return;
+          }
+
+          if (data.purchase && data.purchase.tacoId) {
+            setTacoUrl(data.purchase.tacoId);
+          } else {
+            console.error("Purchase data is missing tacoId");
+          }
         } catch (err) {
-          console.error(err);
+          console.error("Fetch error:", err);
         }
       }
     };
@@ -46,8 +57,8 @@ const PurchaseSuccess = () => {
         </p>
         <div className="mt-6 text-center">
           <Link
-            href={`/book/${bookUrl}`}
-            className="text-indigo-600 hover:text-indigo-800 transition duration-300"
+            href={`/taco/${tacoUrl}`}
+            className="text-green-600 hover:text-green-800 transition duration-300 font-bold"
           >
             購入した記事を読む
           </Link>

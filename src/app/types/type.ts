@@ -1,4 +1,4 @@
-type BookType = {
+type TacoType = {
     id:string;
     title:string;
     content:string;
@@ -18,9 +18,9 @@ type User = {
 type Purchase = {
     id:string;
     userId:string;
-    bookId:string;
+    tacoId:string;
     createdAt:string;
     user:User;
 };
 
-export type {BookType,User,Purchase};
+export type {TacoType,User,Purchase};

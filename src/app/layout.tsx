@@ -3,10 +3,7 @@ import localFont from "next/font/local";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
-// import { SessionProvider } from "next-auth/react";
 import { NextAuthProvider } from "./lib/Next-auth/provider";
-import { Suspense } from "react";
-import Loading from "./loading";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -20,11 +17,10 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-// 修正: Noto Sans JP フォントの設定で subsets を指定
 const notoSansJP = Noto_Sans_JP({
-  subsets: ["latin"], // 利用可能なサブセットを指定
+  subsets: ["latin"],
   variable: "--font-noto-sans-jp",
-  weight: ["400", "700"], // 必要なウェイトを指定
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -34,17 +30,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${notoSansJP.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoSansJP.variable} antialiased min-h-screen flex flex-col`}
       >
         <NextAuthProvider>
           <Header />
-          <Suspense fallback={<Loading />}>{children}</Suspense>
+          {children}
         </NextAuthProvider>
       </body>
     </html>
