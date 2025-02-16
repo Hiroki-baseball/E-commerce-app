@@ -72,7 +72,7 @@ const Taco = ({ taco, isPurchased, user }: Props) => {
   };
 
   return (
-    <main className="flex justify-center items-start bg-yellow-50 py-6 md:min-h-screen">
+    <main className="flex justify-center items-start bg-yellow-50 py-6 min-h-screen">
       <div className="max-w-5xl w-full px-4">
         <Suspense fallback={<Loading />}>
           <div className="flex flex-col items-center m-4">
@@ -80,18 +80,18 @@ const Taco = ({ taco, isPurchased, user }: Props) => {
               onClick={handlePurchaseClick}
               className="cursor-pointer shadow-2xl duration-300 hover:translate-y-1 hover:shadow-none"
             >
-              <div className="w-full">
+              <div className="relative w-full" style={{ paddingBottom: "75%" }}>
                 <Image
                   priority
                   src={`${taco.thumbnail.url}?w=800&h=600&fit=crop`}
                   alt={taco.title}
-                  layout="responsive"
-                  width={800}
-                  height={600}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: "contain" }}
                   className="rounded-t-md"
-                  objectFit="contain"
                 />
               </div>
+
               <div className="px-4 py-4 bg-slate-100 rounded-b-md">
                 <h2 className="text-lg font-semibold">{taco.title}</h2>
                 <p className="mt-2 text-lg text-slate-600">このレシピは○○...</p>
