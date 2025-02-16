@@ -8,7 +8,7 @@ export const client = createClient({
 
 export const getAllTacos = async () => {
     const allTacos = await client.getList<TacoType>({
-        endpoint:"tacosrecipe",
+        endpoint:"tacorecipes",
         customRequestInit:{
           next:{
             revalidate:3600
@@ -21,7 +21,7 @@ export const getAllTacos = async () => {
 
 export const getDetailTaco = async (contentId: string) => {
   const DetailTaco = await client.getListDetail<TacoType>({
-    endpoint:"tacosrecipe",
+    endpoint:"tacorecipes",
     contentId,
     customRequestInit:{
       cache:"no-cache",
