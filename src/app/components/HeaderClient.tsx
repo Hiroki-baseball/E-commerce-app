@@ -40,15 +40,23 @@ const HeaderClient = ({ user }: HeaderClientProps) => {
           ) : (
             ""
           )}
-
-          <Link href={`/profile`}>
+          {user ? (
+            <Link href={`/profile`}>
+              <Image
+                width={50}
+                height={50}
+                alt="profile_icon"
+                src={user?.image || "/default_icon.png"}
+              />
+            </Link>
+          ) : (
             <Image
               width={50}
               height={50}
               alt="profile_icon"
-              src={user?.image || "/default_icon.png"}
+              src={"/default_icon.png"}
             />
-          </Link>
+          )}
         </div>
       </nav>
     </header>
