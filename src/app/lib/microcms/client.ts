@@ -11,7 +11,7 @@ export const getAllTacos = async () => {
         endpoint:"tacorecipes",
         customRequestInit:{
           next:{
-            revalidate:3600
+            revalidate: 5,
           }
         },
     });
