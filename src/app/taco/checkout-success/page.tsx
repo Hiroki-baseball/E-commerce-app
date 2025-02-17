@@ -9,15 +9,10 @@ const PurchaseSuccess = () => {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
 
-  console.log("sessionId:", sessionId);
-
   useEffect(() => {
     const fetchData = async () => {
       if (sessionId) {
         try {
-          console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
-
-          console.log("sessionID", sessionId);
           const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/checkout/success`,
             {
@@ -26,8 +21,9 @@ const PurchaseSuccess = () => {
               body: JSON.stringify({ sessionId }),
             }
           );
+
           const data = await res.json();
-          console.log("Response data:", data);
+
           if (data.error) {
             console.error("Error from API:", data.error);
             return;

@@ -19,7 +19,6 @@ const Taco = ({ taco, isPurchased, user }: Props) => {
 
   const startCheckout = async () => {
     try {
-      console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
         {
@@ -54,9 +53,7 @@ const Taco = ({ taco, isPurchased, user }: Props) => {
     }
   };
 
-  useEffect(() => {
-    console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
-  }, [showModal]);
+  useEffect(() => {}, [showModal]);
 
   const handleCancel = () => {
     setShowModal(false);

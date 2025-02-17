@@ -2,10 +2,8 @@
 
 import { getProviders, signIn } from "next-auth/react";
 
-// eslint-disable-next-line @next/next/no-async-client-component
 async function Login() {
   const providers = await getProviders().then((res) => {
-    console.log(res);
     return res;
   });
 

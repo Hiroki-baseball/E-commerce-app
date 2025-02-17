@@ -31,7 +31,6 @@ const HeaderClient = ({ user }: HeaderClientProps) => {
 
           {user ? (
             <Link
-              // onClick={() => signOut({ callbackUrl: "/login" })}
               href={"/api/auth/signout"}
               className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
             >

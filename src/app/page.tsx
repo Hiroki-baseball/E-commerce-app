@@ -1,12 +1,9 @@
-// "use client";
-
 import { getServerSession } from "next-auth";
 import Taco from "./components/Taco";
 import { getAllTacos } from "./lib/microcms/client";
 import { TacoType, Purchase, User } from "./types/type";
 import { nextAuthOptions } from "./lib/Next-auth/options";
 
-// eslint-disable-next-line @next/next/no-async-client-component
 export default async function Home() {
   const { contents } = await getAllTacos();
   const session = await getServerSession(nextAuthOptions);
@@ -20,12 +17,9 @@ export default async function Home() {
       { cache: "no-store" }
     );
     const purchasesData = await response.json();
-    // console.log(purchasesData);
     purchaseTacoIds = purchasesData.map(
       (purchaseTaco: Purchase) => purchaseTaco.tacoId
     );
-
-    // console.log(purchaseTacoIds);
   }
 
   return (

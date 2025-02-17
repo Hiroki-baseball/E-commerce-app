@@ -12,7 +12,6 @@ export default async function ProfilePage() {
   let purchasesDetailTacos: TacoType[] = [];
 
   if (user) {
-    console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`,
       { cache: "no-store" }

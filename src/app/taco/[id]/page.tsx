@@ -3,9 +3,7 @@ import Image from "next/image";
 import React from "react";
 
 const DetailTaco = async ({ params }: { params: { id: string } }) => {
-  //   console.log(params.id);
   const taco = await getDetailTaco(params.id);
-  //   console.log(taco);
 
   return (
     <div className="container mx-auto p-4">
