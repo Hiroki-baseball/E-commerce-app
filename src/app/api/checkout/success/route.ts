@@ -2,7 +2,6 @@ import prisma from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
-// Stripeの初期化
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error("STRIPE_SECRET_KEY is not defined in environment variables.");
 }
@@ -14,7 +13,6 @@ interface RequestBody {
   sessionId: string;
 }
 
-// 購入履歴の保存処理
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as RequestBody;
